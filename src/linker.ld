@@ -18,7 +18,10 @@
 #include <plat.h>
 
 MEMORY {
-    RAM (rwx)    : ORIGIN = MEM_BASE, LENGTH = MEM_SIZE    
+#if defined(PLAT_NON_UNIFIED_MEM)
+    ROM (rx)     : ORIGIN = PLAT_CODE_MEM_BASE, LENGTH = PLAT_CODE_MEM_SIZE
+#endif
+    RAM (rwx)    : ORIGIN = MEM_BASE, LENGTH = MEM_SIZE
 }
 
 ENTRY(_start)
@@ -27,26 +30,33 @@ SECTIONS {
 
     .start : {
         *(.start)
-    } 
+    }
 
     .text :  {
         *(.text*)
-    } 
+    }
 
     .rodata :  {
         *(.rodata*)
     }
 
-    .data : {
+	. = ALIGN(32); /* start RW sections in separate page */
+	_data_start = .;
+
+#if defined(PLAT_NON_UNIFIED_MEM)
+    . = PLAT_MEM_BASE;
+#endif
+
+    .data : AT(_data_start){
         *(.data .data.*)
         PROVIDE(__global_pointer$ = . + 0x800);
         *(.sdata .sdata.* .sdata2.*)
     }
 
-    .bss (NOLOAD) :  {	
+    .bss (NOLOAD) :  {
         __bss_start = .;
-        *(.bss* .sbss*) 
-        *(COMMON)	
+        *(.bss* .sbss*)
+        *(COMMON)
         __bss_end = .;
     }
 
