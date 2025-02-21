@@ -153,15 +153,10 @@ wait_flag:
 
     // TODO: other c runtime init (eg ctors)
 */
-    dmb 
-    ldr r7, =_start
-    nop
-    dmb 
-    mov r6, #0
-    mov r8, r8
-    mov r8, r8
-    mov r8, r8
-    mov r8, r8
+    movw r0, #:lower16:(0x20030000+0x8000)
+    movt r0, #:upper16:(0x20030000+0x8000)
+    msr msp, r0
+
     b .
     bl _init
 /*b _exit
