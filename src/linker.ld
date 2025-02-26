@@ -67,6 +67,11 @@ SECTIONS {
 
     . = ALIGN(16);
     PROVIDE(_stack_base = .);
+#if defined(PLAT_NON_UNIFIED_MEM)
+    . = . + STACK_SIZE;
+    PROVIDE(_stack_top = .);
+#else
     . = . + 2M; /* 2M of total stack size */
+#endif
     PROVIDE(_heap_base = .);
 }

@@ -1,3 +1,8 @@
+/**
+ * SPDX-License-Identifier: Apache-2.0U
+ * Copyright (c) Bao Project and Contributors. All rights reserved.
+ */
+
 #include <sysregs.h>
 #include <arch/irq.h>
 
@@ -14,7 +19,7 @@
 .balign 0x80
 .global _exception_vector
 _exception_vector:
-    .word _stack_base
+    .word _stack_top
     .word _start
     .rept 13
     .word _exception_handler

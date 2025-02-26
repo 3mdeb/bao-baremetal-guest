@@ -9,6 +9,8 @@
 #define PLAT_MEM_BASE       0x20030000
 #define PLAT_MEM_SIZE       0x8000
 
+#define STACK_SIZE          0x4000
+
 #define PLAT_TIMER_FREQ     216000000UL
 
 #define PLAT_UART_ADDR      0x40087000

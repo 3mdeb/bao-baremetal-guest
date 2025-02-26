@@ -1,3 +1,7 @@
+/**
+ * SPDX-License-Identifier: Apache-2.0U
+ * Copyright (c) Bao Project and Contributors. All rights reserved.
+ */
 
 #include <core.h>
 #include <cpu.h>

@@ -1,5 +1,10 @@
-#ifndef SYSTICK_ARCH_H
-#define SYSTICK_ARCH_H
+/**
+ * SPDX-License-Identifier: Apache-2.0U
+ * Copyright (c) Bao Project and Contributors. All rights reserved.
+ */
+
+#ifndef ARCH_SYSTICK_H
+#define ARCH_SYSTICK_H
 
 #include <sysregs.h>
 
@@ -28,4 +33,4 @@ static inline uint32_t systick_get_csr(void)
     return systick->csr;
 }
 
-#endif /* SYSTICK_ARCH_H */
+#endif /* ARCH_SYSTICK_H */

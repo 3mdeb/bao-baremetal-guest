@@ -3,8 +3,8 @@
  * Copyright (c) Bao Project and Contributors. All rights reserved.
  */
 
- #ifndef __NVIC_H__
- #define __NVIC_H__
+#ifndef ARCH_NVIC_H
+#define ARCH_NVIC_H
 
 #include <sysregs.h>
 
@@ -39,4 +39,4 @@ static inline bool nvic_is_active(unsigned long int_id)
 
 void nvic_handle(void);
 
-#endif /* __NVIC_H__ */
+#endif /* ARCH_NVIC_H */

@@ -55,7 +55,7 @@ void main(void)
     irq_enable(UART_IRQ_ID);
     irq_set_prio(UART_IRQ_ID, IRQ_MAX_PRIO);
 
-    printf("cpu %d up\n", get_cpuid());
+    printf("cpu 0 up\n");
 
     while(1) wfi();
 }

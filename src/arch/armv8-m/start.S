@@ -1,7 +1,9 @@
+/**
+ * SPDX-License-Identifier: Apache-2.0U
+ * Copyright (c) Bao Project and Contributors. All rights reserved.
+ */
 
 #include <sysregs.h>
-
-#define STACK_SIZE  0x800
 
 .syntax unified
 
@@ -10,7 +12,6 @@
 .thumb_func
 .global _start
 _start:
-
     // Disable interrupts
     cpsid i
 
@@ -22,7 +23,6 @@ _start:
     ldr r1, [r1]
     msr msp, r1
     ldr r3, =_stack_base
-    add r3, r3, #STACK_SIZE
     msr msplim, r3
 
     // Enable Fault Handlers
