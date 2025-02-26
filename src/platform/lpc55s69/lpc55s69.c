@@ -5,8 +5,8 @@ Pl011_Uart *uart  = (void*) PLAT_UART_ADDR;
 
 void uart_init(void)
 {
-    pl011_uart_init(uart);
-    pl011_uart_enable(uart);
+    //pl011_uart_init(uart);
+    //pl011_uart_enable(uart);
 
     return;
 }

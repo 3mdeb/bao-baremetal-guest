@@ -5,12 +5,11 @@
 #include <sysregs.h>
 
 static inline unsigned long get_cpuid(){
-    unsigned long cpuid = sysreg_mpidr_el1_read();
-    return cpuid & MPIDR_CPU_MASK;
+    return scb->cpuid;
 }
 
 static bool cpu_is_master() {
-    return get_cpuid() == 0;
+    return true;
 }
 
 #endif

@@ -2,19 +2,32 @@
 #define ARCH_TIMER_H
 
 #include <core.h>
+#include <sysregs.h>
+#include <systick.h>
 
-extern unsigned long TIMER_FREQ;
+#define TIMER_FREQ  (PLAT_TIMER_FREQ)
 
-static inline void timer_set(uint64_t n)
+static inline void timer_enable(void)
 {
-    uint64_t current = sysreg_cntvct_el0_read();
-    sysreg_cntv_cval_el0_write(current + n);
+    systick_set_csr(SYSTICK_CSR_TICKINT | SYSTICK_CSR_ENABLE | SYSTICK_CSR_CLKSOURCE);
 }
 
-static inline uint64_t timer_get()
+static inline void timer_disable(void)
 {
-    uint64_t time = sysreg_cntvct_el0_read();
-    return time; // assumes plat_freq = 100MHz
+    systick_set_csr(systick_get_csr() & ~SYSTICK_CSR_ENABLE);
 }
+
+static inline void timer_set(uint32_t value)
+{
+    timer_disable();
+    systick_set_rvr(value);
+    timer_enable();
+}
+
+static inline uint32_t timer_get(void)
+{
+    return (uint32_t)systick_get_cvr();
+}
+
 
 #endif

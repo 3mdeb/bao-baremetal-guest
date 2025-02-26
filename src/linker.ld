@@ -41,17 +41,22 @@ SECTIONS {
     }
 
 	. = ALIGN(32); /* start RW sections in separate page */
-	_data_start = .;
+	_data_lma_start = .;
 
 #if defined(PLAT_NON_UNIFIED_MEM)
     . = PLAT_MEM_BASE;
+    _data_vma_start = .;
 #endif
 
-    .data : AT(_data_start){
+    .data : AT(_data_lma_start){
         *(.data .data.*)
         PROVIDE(__global_pointer$ = . + 0x800);
         *(.sdata .sdata.* .sdata2.*)
     }
+
+#if defined(PLAT_NON_UNIFIED_MEM)
+    _data_lma_end = _data_lma_start + SIZEOF(.data);
+#endif
 
     .bss (NOLOAD) :  {
         __bss_start = .;

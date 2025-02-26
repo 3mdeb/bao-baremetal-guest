@@ -15,6 +15,7 @@
  */
 
 #include <core.h>
+#include <util.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <cpu.h>
@@ -56,7 +57,9 @@ void main(void){
 
         irq_set_handler(UART_IRQ_ID, uart_rx_handler);
         irq_set_handler(TIMER_IRQ_ID, timer_handler);
-        irq_set_handler(IPI_IRQ_ID, ipi_handler);
+        if (!DEFINED(SINGLE_CORE)) {
+            irq_set_handler(IPI_IRQ_ID, ipi_handler);
+        }
 
         uart_enable_rxirq();
 
@@ -69,8 +72,10 @@ void main(void){
 
     irq_enable(UART_IRQ_ID);
     irq_set_prio(UART_IRQ_ID, IRQ_MAX_PRIO);
-    irq_enable(IPI_IRQ_ID);
-    irq_set_prio(IPI_IRQ_ID, IRQ_MAX_PRIO);
+    if (!DEFINED(SINGLE_CORE)) {
+        irq_enable(IPI_IRQ_ID);
+        irq_set_prio(IPI_IRQ_ID, IRQ_MAX_PRIO);
+    }
 
     while(!master_done);
     spin_lock(&print_lock);

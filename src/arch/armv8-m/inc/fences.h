@@ -1,55 +1,42 @@
 /**
- * Bao, a Lightweight Static Partitioning Hypervisor
- *
- * Copyright (c) Bao Project (www.bao-project.org), 2019-
- *
- * Authors:
- *      Jose Martins <jose.martins@bao-project.org>
- *
- * Bao is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 2 as published by the Free
- * Software Foundation, with a special exception exempting guest code from such
- * license. See the COPYING file in the top-level directory for details.
- *
+ * SPDX-License-Identifier: Apache-2.0
+ * Copyright (c) Bao Project and Contributors. All rights reserved.
  */
-
 #ifndef __FENCES_ARCH_H__
 #define __FENCES_ARCH_H__
 
-#define DMB(shdmn) asm volatile("dmb " #shdmn "\n\t" ::: "memory")
+#define ISB() __asm__ volatile("isb 0xF" ::: "memory");
+#define DSB() __asm__ volatile("dsb 0xF" ::: "memory");
+#define DMB() __asm__ volatile("dmb 0xF" ::: "memory");
 
-#define DSB(shdmn) asm volatile("dsb " #shdmn "\n\t" ::: "memory")
-
-#define ISB() asm volatile("isb\n\t" ::: "memory")
-
-static inline void fence_ord_write()
+static inline void fence_ord_write(void)
 {
-    DMB(ishst);
+    DMB();
 }
 
-static inline void fence_ord_read()
+static inline void fence_ord_read(void)
 {
-    DMB(ishld);
+    DMB();
 }
 
-static inline void fence_ord()
+static inline void fence_ord(void)
 {
-    DMB(ish);
+    DMB();
 }
 
-static inline void fence_sync_write()
+static inline void fence_sync_write(void)
 {
-    DSB(ishst);
+    DSB();
 }
 
-static inline void fence_sync_read()
+static inline void fence_sync_read(void)
 {
-    DSB(ishld);
+    DSB();
 }
 
-static inline void fence_sync()
+static inline void fence_sync(void)
 {
-    DSB(ish);
+    DSB();
 }
 
 #endif /* __FENCES_ARCH_H__ */
