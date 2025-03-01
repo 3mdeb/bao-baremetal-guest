@@ -14,7 +14,7 @@
 
 static inline void timer_enable(void)
 {
-    systick_set_csr(SYSTICK_CSR_TICKINT | SYSTICK_CSR_ENABLE | SYSTICK_CSR_CLKSOURCE);
+    systick_set_csr( systick_get_csr() | SYSTICK_CSR_ENABLE | SYSTICK_CSR_CLKSOURCE);
 }
 
 static inline void timer_disable(void)
