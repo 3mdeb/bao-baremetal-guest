@@ -1,3 +1,3 @@
 #include <timer.h>
 
-unsigned long TIMER_FREQ;
+unsigned long long TIMER_FREQ;

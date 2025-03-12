@@ -10,7 +10,7 @@
 
 static inline void systick_set_rvr(uint32_t val)
 {
-    systick->rvr = val & (0xFFFFFFUL);
+    systick->rvr = val & (0x1FFFFFFUL);
 }
 
 static inline uint32_t systick_get_rvr(void)
