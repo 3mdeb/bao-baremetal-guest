@@ -22,16 +22,16 @@ static inline void timer_disable(void)
     systick_set_csr(systick_get_csr() & ~SYSTICK_CSR_ENABLE);
 }
 
-static inline void timer_set(uint32_t value)
+static inline void timer_set(uint64_t value)
 {
     timer_disable();
     systick_set_rvr(value);
     timer_enable();
 }
 
-static inline uint32_t timer_get(void)
+static inline uint64_t timer_get(void)
 {
-    return (uint32_t)systick_get_cvr();
+    return (uint64_t)systick_get_cvr();
 }
 
 
