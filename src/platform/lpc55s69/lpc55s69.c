@@ -1,33 +1,34 @@
 #include <plat.h>
 #include <lpc_uart.h>
+#include <nvic.h>
+#include <sysregs.h>
 
-Pl011_Uart *uart  = (void*) PLAT_UART_ADDR;
+struct fc_uart *uart  = (void*) PLAT_UART_ADDR;
 
 void uart_init(void)
 {
-    //pl011_uart_init(uart);
-    //pl011_uart_enable(uart);
+    lpc_uart_init(uart);
+    lpc_uart_enable(uart);
 
     return;
 }
 
 void uart_putc(char c)
 {
-    pl011_uart_putc(uart, c);
+    lpc_uart_putc(uart, c);
 }
 
 char uart_getchar(void)
 {
-    return pl011_uart_getc(uart);
+    return lpc_uart_getc(uart);
 }
 
-void uart_enable_rxirq(){
-
+void uart_enable_rxirq()
+{
+    lpc_uart_enable_rxirq(uart);
 }
 
-void uart_clear_rxirq(){
-    while(!(uart->flag & UART_FR_RXFE)) {
-        volatile char c = uart->data;
-    }
-    uart->isr_clear = 0xffff;
+void uart_clear_rxirq()
+{
+    lpc_uart_clear_rxirq(uart);
 }
