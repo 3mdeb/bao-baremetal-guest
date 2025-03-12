@@ -28,18 +28,20 @@
 
 #define TIMER_INTERVAL (TIME_S(1))
 
-void uart_rx_handler(){
-    printf("cpu0: \n");
+void uart_rx_handler()
+{
+    printf("VM0: UART RX Handler\n");
     uart_clear_rxirq();
 }
 
-void timer_handler(){
-    printf("cpu0: \n");
+void timer_handler()
+{
+    printf("VM0: SysTick Handler\n");
 }
 
 void main(void)
 {
-    printf("Bao bare-metal test guest\n");
+    printf("VM0: Bao bare-metal test guest\n");
 
     irq_set_handler(UART_IRQ_ID, uart_rx_handler);
     irq_set_handler(TIMER_IRQ_ID, timer_handler);
@@ -53,8 +55,5 @@ void main(void)
     irq_enable(UART_IRQ_ID);
     irq_set_prio(UART_IRQ_ID, IRQ_MAX_PRIO);
 
-    printf("cpu 0 up\n");
-
     while(1) wfi();
-    while(1);
 }
