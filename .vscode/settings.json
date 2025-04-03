@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.lds": "linkerscript",
-        "irq.h": "c",
-        "pl011_uart.h": "c"
-    }
-}
