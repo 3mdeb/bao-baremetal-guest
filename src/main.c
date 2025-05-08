@@ -19,7 +19,7 @@
 #define VM "VM0"
 #define IPC_IRQ_ID 78
 
-#define TIMER_INTERVAL      (TIME_MS(50))
+#define TIMER_INTERVAL      (TIME_MS(1000))
 
 #define BAO_IMAGE_START     0x10000000UL
 #define BAO_HC_OFF          0x41UL
