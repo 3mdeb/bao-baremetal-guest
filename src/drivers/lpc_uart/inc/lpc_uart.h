@@ -128,7 +128,8 @@ static inline void lpc_uart_enable_rxirq(volatile fc_uart_t* uart)
 
 static inline void lpc_uart_clear_rxirq(volatile fc_uart_t* uart)
 {
-    (void)uart->fiford;
+    volatile uint32_t rx;
+    rx = uart->fiford;
 }
 
 #endif
