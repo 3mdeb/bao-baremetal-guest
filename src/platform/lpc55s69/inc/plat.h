@@ -14,7 +14,7 @@
 #define PLAT_MEM_SIZE       0x7000
 
 // Select USART2 or USART3 ot be used as console
-#define SELECTED_UART       2
+#define SELECTED_UART       3
 
 #define FLEXCOMM2_ADDR      0x40088000UL
 #define FLEXCOMM2_NVIC_IRQ  16
