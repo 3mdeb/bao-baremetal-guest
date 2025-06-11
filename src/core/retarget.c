@@ -8,24 +8,29 @@
 #include <sys/errno.h>
 
 #include <spinlock.h>
+#ifdef ENABLE_UART
 #include <uart.h>
+#endif
 #include <cpu.h>
 #include <fences.h>
 #include <wfi.h>
 
 int _read(int file, char *ptr, int len)
 {
+#ifdef ENABLE_UART
     int i;
     for (i = 0; i < len; ++i)
     {
         ptr[i] = uart_getchar();
     }
 
+#endif
     return len;
 }
 
 int _write(int file, char *ptr, int len)
 {
+#ifdef ENABLE_UART
     int i;
     for (i = 0; i < len; ++i)
     {
@@ -35,7 +40,7 @@ int _write(int file, char *ptr, int len)
         }
         uart_putc(ptr[i]);
     }
-
+#endif
     return len;
 }
 
@@ -102,7 +107,9 @@ void _init(){
     spin_lock(&init_lock);
     if(!init_done) {
         init_done = true;
+#ifdef ENABLE_UART
         uart_init();
+#endif
     }
     spin_unlock(&init_lock);
     

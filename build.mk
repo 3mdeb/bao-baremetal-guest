@@ -35,6 +35,9 @@ ifneq ($(NO_FIRMWARE),)
 CPPFLAGS+=-DNO_FIRMWARE=y
 endif
 
+# Comment this to disable UART initialization in baremetal app
+CPPFLAGS+=-DENABLE_UART=y
+
 ASFLAGS += $(GENERIC_FLAGS) $(CPPFLAGS) $(ARCH_ASFLAGS) 
 CFLAGS += $(GENERIC_FLAGS) $(CPPFLAGS) $(ARCH_CFLAGS) 
 LDFLAGS += $(GENERIC_FLAGS) $(ARCH_LDFLAGS) -nostartfiles

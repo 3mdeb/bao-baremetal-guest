@@ -12,7 +12,9 @@
 #include <spinlock.h>
 #include <plat.h>
 #include <irq.h>
+#ifdef ENABLE_UART
 #include <uart.h>
+#endif
 #include <timer.h>
 #include <string.h>
 
@@ -25,7 +27,7 @@
 #define BAO_HC_OFF          0x41UL
 #define BAO_HC_ADDR         BAO_IMAGE_START+BAO_HC_OFF
 #define BAO_HC_IPC_ID       0x1
-#define VMS_IPC_BASE        0x20017000UL
+#define VMS_IPC_BASE        0x20027000UL
 #define VMS_IPC_SIZE        0x1000
 
 void (*bao_hypercall)(unsigned int, unsigned int, unsigned int) =
@@ -37,8 +39,10 @@ const size_t shmem_channel_size = VMS_IPC_SIZE/2;
 
 void print_message (char * string)
 {
+#ifdef ENABLE_UART
     while (*string)
         uart_putc(*string++);
+#endif
 }
 
 void shmem_init(void)
@@ -60,11 +64,13 @@ void ipc_irq_handler(void)
     print_message(message1);
 }
 
+#ifdef ENABLE_UART
 void uart_rx_handler(void)
 {
     printf(VM": UART RX Handler\n");
     uart_clear_rxirq();
 }
+#endif
 
 void timer_handler(void)
 {
@@ -86,17 +92,19 @@ void main(void)
 
     ipc_init();
 
+#ifdef ENABLE_UART
     irq_set_handler(UART_IRQ_ID, uart_rx_handler);
+    uart_enable_rxirq();
+    irq_enable(UART_IRQ_ID);
+    irq_set_prio(UART_IRQ_ID, IRQ_MAX_PRIO);
+#endif
     irq_set_handler(TIMER_IRQ_ID, timer_handler);
 
-    uart_enable_rxirq();
 
     timer_set(TIMER_INTERVAL);
     irq_enable(TIMER_IRQ_ID);
     irq_set_prio(TIMER_IRQ_ID, IRQ_MAX_PRIO);
 
-    irq_enable(UART_IRQ_ID);
-    irq_set_prio(UART_IRQ_ID, IRQ_MAX_PRIO);
 
     while(1) wfi();
 }
